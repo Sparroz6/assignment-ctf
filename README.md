@@ -1,3 +1,4 @@
+
 # Penetration Testing Report — FLAG26
 ### PwnTillDawn | Linux Target: 10.150.150.178
 **CLO2: Measures vulnerabilities and risk of system and application**
@@ -83,6 +84,9 @@ nmap -p 22,80 -sC -sV -Pn 10.150.150.178 -oN targeted.txt
 
 #### Step 3 — Web Directory Enumeration
 
+<img width="697" height="453" alt="login" src="https://github.com/user-attachments/assets/0c3e6384-0298-4dd5-b3e8-4522f3bedc15" />
+
+
 ```bash
 gobuster dir -u http://10.150.150.178 \
   -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt \
@@ -156,6 +160,9 @@ curl http://10.150.150.178/MyCustomScript.js
 
 #### Step 2 — Discovery of Commented Endpoint
 
+<img width="533" height="231" alt="customjs" src="https://github.com/user-attachments/assets/61e7a844-c7a9-43b8-9546-33c195bd9e96" />
+
+
 The JavaScript file contains the following login handler code:
 
 ```javascript
@@ -187,10 +194,16 @@ Directly accessing the commented endpoint:
 curl http://10.150.150.178/getflag26.php
 ```
 
+<img width="659" height="438" alt="curl-flag" src="https://github.com/user-attachments/assets/7011c812-36b8-4b2f-ba72-304e31a2b01a" />
+
+
 **Result:**
 ```
 14f1591562de8892b8d7ed9c4ceb31ed076b556d
 ```
+<img width="697" height="453" alt="login" src="https://github.com/user-attachments/assets/c5eee492-9c03-449e-9b0f-aee0e670785b" />
+<img width="542" height="57" alt="flag-found" src="https://github.com/user-attachments/assets/9837414d-9c04-46ad-ad14-03dcc8cce4e5" />
+
 
 ### FLAG26 Captured ✅
 
@@ -221,9 +234,7 @@ FLAG26 = 14f1591562de8892b8d7ed9c4ceb31ed076b556d
 4. JavaScript analysis → Commented getflag26.php endpoint
         ↓
 5. curl getflag26.php → FLAG26 retrieved
+
 ```
-
+<img width="817" height="106" alt="flag26" src="https://github.com/user-attachments/assets/6ef37ba6-38d7-49af-9011-f17a6364b223" />
 ---
-
-*Report produced as part of a controlled penetration testing exercise on the PwnTillDawn platform.*
-*All activities were conducted within the authorized scope of the assessment.*
