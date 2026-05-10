@@ -224,7 +224,7 @@ FLAG26 = 14f1591562de8892b8d7ed9c4ceb31ed076b556d
 
 ### Attack Path Summary
 
-```
+
 1. Port scan → Port 80 open (HTTP)
         ↓
 2. robots.txt → Reveals /STAdmin/Dashboard/
