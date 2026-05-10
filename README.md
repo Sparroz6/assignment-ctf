@@ -236,14 +236,12 @@ FLAG26 = 14f1591562de8892b8d7ed9c4ceb31ed076b556d
 5. curl getflag26.php → FLAG26 retrieved
 
 
+<img width="817" height="106" alt="flag26" src="https://github.com/user-attachments/assets/6ef37ba6-38d7-49af-9011-f17a6364b223" />
 
-README NOTES - VULNERABILITY & SOFTWARE ASSESSMENT (PART 1)
+---
+# Windows-based target
 
-CONTEXT
-Platform : Controlled lab environment (CTF)
-Windows-based target
-
-PART 1.1 - SCOPE & TARGET DEFINITION 
+## PART 1.1 - SCOPE & TARGET DEFINITION 
 
 
 Assessment Objectives:
@@ -258,9 +256,9 @@ Tools Used :
 - Remmina       : Alternative RDP client 
 - Enum4linux    : SMB/Linux enumeration 
 
-PART 1.2 - METHODOLOGY, SCANNING & ANALYSIS 
+## PART 1.2 - METHODOLOGY, SCANNING & ANALYSIS 
 
-PHASE 1 - Web Enumeration (Gobuster and nmap)
+### PHASE 1 - Web Enumeration (Gobuster and nmap)
 Launch VPN:
 <img width="502" height="853" alt="image" src="https://github.com/user-attachments/assets/60503aba-007d-4f2b-94b4-c66a6fe1f5f4" />
 First try nmap (but not enought results):
@@ -278,7 +276,7 @@ Result: No exploitable content or significant information was
 identified from these scans. The enumeration phase did not
 reveal actionable attack vectors through web directory brute-forcing.
 
-PHASE 2 - SQL Injection
+### PHASE 2 - SQL Injection
 Connect to the website:
 <img width="1012" height="806" alt="image" src="https://github.com/user-attachments/assets/1a213f9e-e526-46fa-a90b-07780ade414d" />
 
@@ -295,7 +293,7 @@ to privileged account information.
 
 FLAG 52:
 
-PHASE 3 - RDWeb Access-
+### PHASE 3 - RDWeb Access-
 Using the credentials obtained via SQL Injection, access to the
 RDWeb (Remote Desktop Web Access) portal was successfully achieved.
 <img width="1016" height="883" alt="image" src="https://github.com/user-attachments/assets/d29ae38c-57f9-4588-a52e-9b38360b7586" />
@@ -305,7 +303,7 @@ This indicates the presence of an exposed Remote Desktop / RemoteApp
 environment accessible through the web portal.
 <img width="721" height="585" alt="image" src="https://github.com/user-attachments/assets/8c2c7897-6fa1-4ad8-95f0-7208aec4cade" />
 
-PART 1.3 - EXPLOITATION & FLAG ACQUISITION (2%)
+## PART 1.3 - EXPLOITATION & FLAG ACQUISITION (2%)
 
 
 ATTACK PATH SUMMARY
@@ -336,7 +334,7 @@ Attempted connection methods:
 None of the above methods successfully established an interactive
 session with the Windows target.
 
-CONCLUSION
+## CONCLUSION
 -----------
 A critical SQL Injection vulnerability was successfully identified
 and exploited, resulting in authentication bypass and recovery of
@@ -347,10 +345,3 @@ However, full exploitation of the Windows target could not be
 completed due to RDP/RemoteApp connectivity issues, potentially
 caused by network restrictions, RemoteApp policy enforcement,
 or client compatibility limitations in the lab environment.
-
-
-
-
-
-<img width="817" height="106" alt="flag26" src="https://github.com/user-attachments/assets/6ef37ba6-38d7-49af-9011-f17a6364b223" />
-
