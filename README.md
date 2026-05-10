@@ -235,6 +235,122 @@ FLAG26 = 14f1591562de8892b8d7ed9c4ceb31ed076b556d
         ↓
 5. curl getflag26.php → FLAG26 retrieved
 
-```
+
+
+README NOTES - VULNERABILITY & SOFTWARE ASSESSMENT (PART 1)
+
+CONTEXT
+Platform : Controlled lab environment (CTF)
+Windows-based target
+
+PART 1.1 - SCOPE & TARGET DEFINITION 
+
+
+Assessment Objectives:
+- Identify vulnerabilities on the target systems
+- Exploit discovered flaws to demonstrate security impact
+- Document the entire process with evidence
+
+Tools Used :
+- Nmap          : Port scanning, service detection, OS fingerprinting
+- Gobuster      : Web directory and file enumeration
+- xfreerdp      : Attempted RDP remote access 
+- Remmina       : Alternative RDP client 
+- Enum4linux    : SMB/Linux enumeration 
+
+PART 1.2 - METHODOLOGY, SCANNING & ANALYSIS 
+
+PHASE 1 - Web Enumeration (Gobuster and nmap)
+Launch VPN:
+<img width="502" height="853" alt="image" src="https://github.com/user-attachments/assets/60503aba-007d-4f2b-94b4-c66a6fe1f5f4" />
+First try nmap (but not enought results):
+<img width="778" height="268" alt="image" src="https://github.com/user-attachments/assets/113f7eec-d3c0-4a46-a818-e058213c13d2" />
+Second nmap:
+<img width="766" height="641" alt="image" src="https://github.com/user-attachments/assets/6e1a93a7-e72b-4bd0-9bbc-851822ba8977" />
+
+Multiple Gobuster scans were conducted to search for:
+  - Hidden directories
+  - Administration pages
+  - Sensitive files
+  - Additional endpoints
+
+Result: No exploitable content or significant information was
+identified from these scans. The enumeration phase did not
+reveal actionable attack vectors through web directory brute-forcing.
+
+PHASE 2 - SQL Injection
+Connect to the website:
+<img width="1012" height="806" alt="image" src="https://github.com/user-attachments/assets/1a213f9e-e526-46fa-a90b-07780ade414d" />
+
+A SQL Injection vulnerability was identified and successfully exploited
+on the target web application.
+
+Impact:
+  - Authentication bypass achieved
+  - Sensitive credentials recovered from the database
+
+This represents a critical vulnerability as it allowed direct access
+to privileged account information.
+<img width="1015" height="671" alt="image" src="https://github.com/user-attachments/assets/5d936b04-b7b2-46f9-8a3d-ce570c6af84f" />
+
+FLAG 52:
+
+PHASE 3 - RDWeb Access-
+Using the credentials obtained via SQL Injection, access to the
+RDWeb (Remote Desktop Web Access) portal was successfully achieved.
+<img width="1016" height="883" alt="image" src="https://github.com/user-attachments/assets/d29ae38c-57f9-4588-a52e-9b38360b7586" />
+
+Upon authentication, the portal provided a downloadable .rdp file.
+This indicates the presence of an exposed Remote Desktop / RemoteApp
+environment accessible through the web portal.
+<img width="721" height="585" alt="image" src="https://github.com/user-attachments/assets/8c2c7897-6fa1-4ad8-95f0-7208aec4cade" />
+
+PART 1.3 - EXPLOITATION & FLAG ACQUISITION (2%)
+
+
+ATTACK PATH SUMMARY
+1. nmap -> find port for the website
+2. SQL Injection vulnerability identified on the web application
+3. Exploitation of SQLi -> authentication bypass + credential recovery
+4. Credentials used to authenticate on RDWeb portal
+5. .rdp file downloaded from the portal (RemoteApp configuration)
+<img width="131" height="127" alt="image" src="https://github.com/user-attachments/assets/257da126-d817-47f5-aa52-04d91900f822" />
+6. Attempted RDP connection using xfreerdp -> failed
+<img width="948" height="804" alt="image" src="https://github.com/user-attachments/assets/ce49cb26-f75b-4406-a2d9-430a686476b4" />
+7. Attempted RDP connection using Remmina (GUI client) -> failed
+<img width="943" height="130" alt="image" src="https://github.com/user-attachments/assets/2b046508-4081-4dc9-b376-0ca863acf0d8" />
+<img width="654" height="441" alt="image" src="https://github.com/user-attachments/assets/9baf355b-be7c-418e-9edf-a9c4a3c73e54" />
+8. Exploitation blocked at the RDP/RemoteApp access stage
+<img width="645" height="523" alt="image" src="https://github.com/user-attachments/assets/1ae105b5-45c8-46df-a46f-4f16c0745ad9" />
+EXPLOITATION STATUS
+--------------------
+[PARTIAL] SQL Injection successfully exploited.
+[BLOCKED] RDP/RemoteApp access could not be established.
+
+Attempted connection methods:
+  - xfreerdp with the .rdp file directly
+  - xfreerdp with manual IP and credentials
+  - xfreerdp with --from-file flag
+  - Remmina GUI client with manual credentials
+
+None of the above methods successfully established an interactive
+session with the Windows target.
+
+CONCLUSION
+-----------
+A critical SQL Injection vulnerability was successfully identified
+and exploited, resulting in authentication bypass and recovery of
+valid domain credentials. These credentials granted access to the
+RDWeb portal, where a RemoteApp configuration file was obtained.
+
+However, full exploitation of the Windows target could not be
+completed due to RDP/RemoteApp connectivity issues, potentially
+caused by network restrictions, RemoteApp policy enforcement,
+or client compatibility limitations in the lab environment.
+
+
+
+
+
 <img width="817" height="106" alt="flag26" src="https://github.com/user-attachments/assets/6ef37ba6-38d7-49af-9011-f17a6364b223" />
----
+
